@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Флэш-карточки</title>
+		<link rel="stylesheet" href="styles.css" />
+		<!-- Добавляем иконки из FontAwesome -->
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+		/>
+	</head>
+	<body class="light-theme">
+		<!-- Верхняя панель с названием и переключателем темы -->
+		<header class="app-header">
+			<div class="app-title">Флэш-карточки</div>
+			<div class="theme-switcher">
+				<button id="theme-toggle" aria-label="Переключить тему">
+					<i class="fas fa-moon"></i>
+					<span class="theme-text">Тёмная тема</span>
+				</button>
+			</div>
+		</header>
+
+		<!-- Основное представление подборок -->
+		<div id="collections-view">
+			<h1>Мои флэш-карточки</h1>
+			<p>Создавайте и управляйте вашими подборками карточек</p>
+			<div class="main-actions">
+				<button id="create-collection-btn">
+					<i class="fas fa-plus"></i> Создать подборку
+				</button>
+				<button id="import-collection-btn" class="secondary">
+					<i class="fas fa-file-import"></i> Импортировать
+				</button>
+				<input type="file" id="import-file" accept=".json" class="hidden" />
+			</div>
+
+			<div class="container">
+				<div class="collection-list" id="collection-list">
+					<!-- Подборки будут добавлены здесь через JavaScript -->
+				</div>
+			</div>
+		</div>
+
+		<!-- Модальное окно создания/редактирования подборки -->
+		<div id="collection-modal" class="hidden">
+			<div class="modal-overlay"></div>
+			<div class="modal-container">
+				<h2 id="collection-modal-title">Создать новую подборку</h2>
+				<input
+					type="text"
+					id="collection-name"
+					placeholder="Название подборки (например, Japanese 1)"
+				/>
+				<div class="button-group">
+					<button id="save-collection-btn">
+						<i class="fas fa-save"></i> Сохранить
+					</button>
+					<button class="secondary" id="cancel-collection-btn">
+						<i class="fas fa-times"></i> Отмена
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Представление редактирования подборки -->
+		<div id="edit-collection-view" class="hidden">
+			<div class="back-navigation">
+				<button class="secondary" id="back-to-collections-btn">
+					<i class="fas fa-arrow-left"></i> Назад
+				</button>
+				<h1 id="edit-collection-title">Название подборки</h1>
+			</div>
+
+			<div class="button-group action-buttons">
+				<button id="add-card-btn">
+					<i class="fas fa-plus"></i> Добавить карточку
+				</button>
+				<button id="start-learning-btn">
+					<i class="fas fa-graduation-cap"></i> Начать обучение
+				</button>
+				<button id="export-collection-btn">
+					<i class="fas fa-file-export"></i> Экспортировать
+				</button>
+			</div>
+
+			<div class="container">
+				<h2>Карточки</h2>
+				<div id="card-list" class="card-list">
+					<!-- Карточки будут добавлены здесь через JavaScript -->
+				</div>
+			</div>
+		</div>
+
+		<!-- Модальное окно добавления/редактирования карточки -->
+		<div id="card-modal" class="hidden">
+			<div class="modal-overlay"></div>
+			<div class="modal-container">
+				<h2 id="card-modal-title">Добавить новую карточку</h2>
+				<input
+					type="text"
+					id="card-title"
+					placeholder="Название карточки (видимая передняя сторона)"
+				/>
+				<textarea
+					id="card-content"
+					placeholder="Содержание карточки (скрытая обратная сторона)"
+					rows="5"
+				></textarea>
+				<div class="button-group">
+					<button id="save-card-btn">
+						<i class="fas fa-save"></i> Сохранить
+					</button>
+					<button
+						class="secondary"
+						id="cancel-card-btn"
+						onclick="cancelCardEdit()"
+					>
+						<i class="fas fa-times"></i> Отмена
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Представление режима обучения -->
+		<div id="learning-view" class="hidden">
+			<div class="back-navigation">
+				<button class="secondary" id="exit-learning-btn">
+					<i class="fas fa-arrow-left"></i> Выйти из режима обучения
+				</button>
+				<h1 id="learning-collection-title">Название подборки</h1>
+			</div>
+
+			<div class="flashcard">
+				<div class="card-front" id="current-card-front">
+					<!-- Здесь будет отображаться название карточки -->
+				</div>
+				<div class="card-back hidden" id="current-card-back">
+					<!-- Здесь будет отображаться содержание карточки -->
+				</div>
+				<div class="card-nav">
+					<button id="show-answer-btn">
+						<i class="fas fa-eye"></i> <span>Показать ответ</span>
+					</button>
+					<div class="card-navigation-buttons">
+						<button id="prev-card-btn">
+							<i class="fas fa-chevron-left"></i>
+							<span class="nav-text">Пред.</span>
+						</button>
+						<button id="next-card-btn">
+							<span class="nav-text">След.</span>
+							<i class="fas fa-chevron-right"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="learning-progress" id="learning-progress">
+				Карточка <span id="current-card-index">1</span> из
+				<span id="total-cards">5</span>
+			</div>
+		</div>
+
+		<script src="script.js"></script>
+	</body>
+</html>
