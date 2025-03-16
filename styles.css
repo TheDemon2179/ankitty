@@ -436,3 +436,121 @@ textarea:focus {
 		justify-content: space-between;
 	}
 }
+
+/* Стили для логотипа */
+.logo-image {
+	height: 50px; /* Высота логотипа */
+	margin-left: 20px;
+	width: auto;
+	transition: filter 0.3s ease;
+}
+
+/* Инвертирование цветов логотипа в тёмной теме */
+.dark-theme .logo-image {
+	filter: invert(1); /* Инвертирует цвета логотипа для тёмной темы */
+}
+
+/* Добавляем размытые фоновые изображения котов */
+body::before {
+	content: '';
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-image: url('images/bg_cat_1.png'), url('images/bg_cat_2.png');
+	background-repeat: no-repeat;
+	background-position: left bottom, right top;
+	background-size: 25%, 25%;
+	filter: blur(6px);
+	opacity: 0.2;
+	z-index: -1;
+	pointer-events: none; /* Чтобы изображения не перехватывали клики */
+}
+
+/* Контейнер для анимированных котов */
+.cats-background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+	overflow: hidden;
+	pointer-events: none; /* Чтобы коты не перехватывали клики */
+}
+
+/* Коты с анимацией */
+.cat {
+	position: absolute;
+	background-repeat: no-repeat;
+	background-size: contain;
+	opacity: 0.15;
+	filter: blur(6px);
+	will-change: transform; /* Оптимизация для анимации */
+}
+
+.cat-1 {
+	width: 20%;
+	height: 20%;
+	background-image: url('images/bg_cat_1.png');
+	animation: floatLeft 120s linear infinite;
+}
+
+.cat-2 {
+	width: 25%;
+	height: 25%;
+	background-image: url('images/bg_cat_2.png');
+	animation: floatRight 150s linear infinite;
+}
+
+/* Создаем дубликаты с разным расположением и скоростью */
+.cat:nth-child(1) {
+	top: 10%;
+	left: -10%;
+	animation-delay: 0s;
+}
+.cat:nth-child(2) {
+	top: 65%;
+	left: 10%;
+	animation-delay: -30s;
+}
+.cat:nth-child(3) {
+	top: 35%;
+	left: 40%;
+	animation-delay: -60s;
+}
+.cat:nth-child(4) {
+	top: 75%;
+	left: 60%;
+	animation-delay: -90s;
+}
+.cat:nth-child(5) {
+	top: 20%;
+	left: 80%;
+	animation-delay: -45s;
+}
+.cat:nth-child(6) {
+	top: 50%;
+	left: -20%;
+	animation-delay: -75s;
+}
+
+/* Анимации движения */
+@keyframes floatLeft {
+	0% {
+		transform: translateX(-20%);
+	}
+	100% {
+		transform: translateX(120%);
+	}
+}
+
+@keyframes floatRight {
+	0% {
+		transform: translateX(120%);
+	}
+	100% {
+		transform: translateX(-20%);
+	}
+}
